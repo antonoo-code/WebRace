@@ -13,16 +13,23 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 def new_game():
     args = request.args
     name = args.get('name')
-    id = secrets.randbits(64)
+    id = secrets.token_hex(8)
+    players[id]= {'status': None, 'name': name}
+    print(players)
     return {'status': None, 'name': name,  'id': id}
 
 
 
 @app.route("/game", methods=["PUT"])
 def update_game():
+    print(players)
     args = request.args
     id = args.get('id')
+    if id not in players:
+        return {'status':None}
     action = args.get('action')
+    
+    
     return {'status': None}
 
 @app.route("/game", methods=["GET"])
