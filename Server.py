@@ -2,6 +2,8 @@ from flask import Flask, request, send_from_directory
 from flask_cors import CORS
 import json
 import secrets
+from game import Game
+
 
 players = {}
 
@@ -18,28 +20,41 @@ def new_game():
     args = request.args
     name = args.get('name')
     id = secrets.token_hex(8)
-    players[id]= {'status': None, 'name': name}
-    print(players)
-    return {'status': None, 'name': name,  'id': id}
+    game = Game(0)
+    stats = game.get_statistics()
+    players[id]= {'name': name, 'game': game}
+    return {'name': name,  'id': id, 'stats':stats}
 
 
 
 @app.route("/game", methods=["PUT"])
 def update_game():
-    print(players)
     args = request.args
     id = args.get('id')
+    status = {'status': None}
     if id not in players:
-        return {'status':None}
+        return status
     action = args.get('action')
+    if action == 'fly':
+        pass
+    elif action == 'dice':
+        pass
+    elif action == 'charge':
+        pass
+    elif action == 'supercharge':
+        pass
+    elif action == 'locationQuery':
+        pass 
     
-    return {'status': None}
+    return status
 
 @app.route("/game", methods=["GET"])
 def game_status():
     args = request.args
     id = args.get('id')
-    return {'status': None}
+    game = players[id]['game']
+    stats = game.get_statistics()
+    return {'status': stats}
     
 if __name__ == '__main__':
     app.run(use_reloader=True, host='127.0.0.1', port=3000)

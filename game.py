@@ -1,7 +1,7 @@
 from geopy import distance
 import mysql.connector
 import random
-from pprint import pprint as pp
+from pprint import pprint as ppp
 
 NPC_NUBER_OF_OPTIONS = 6
 GAME_AIRPORT_LIMIT = 100
@@ -175,7 +175,6 @@ class Game:
         self.npc_range_1 = NPC_RANGE
         
     def do_fly (self, icao):
-        pp(f'juupajuu {icao}')
         selected_distance = calculate_distance(self.current_airport, icao)
         self.player_range -= selected_distance
         """update_location(icao, self.player_range)"""
@@ -207,7 +206,7 @@ class Game:
             'flight_options': flight_options
         }
     
-
+"""
 g = Game(0)
 t = g.get_statistics()
 pp(t)
@@ -215,6 +214,6 @@ icao = t['flight_options'][0]['icao']
 g.do_fly(icao)
 pp(g.get_statistics())
 
-
+"""
 
 
