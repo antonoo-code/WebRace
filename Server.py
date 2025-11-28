@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, send_from_directory
 from flask_cors import CORS
 import json
 import secrets
@@ -8,6 +8,10 @@ players = {}
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
+
+@app.route("/")
+def front_page():
+    return send_from_directory("static", "index.html")
 
 @app.route("/game", methods=["POST"])
 def new_game():
@@ -28,7 +32,6 @@ def update_game():
     if id not in players:
         return {'status':None}
     action = args.get('action')
-    
     
     return {'status': None}
 
