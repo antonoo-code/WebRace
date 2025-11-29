@@ -1,0 +1,31 @@
+#flight_options {
+  width: 300px;
+  margin: 20px auto;
+  padding: 10px;
+  border-radius: 10px;
+  background: #f0f0f0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+#flight_options ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#flight_options li {
+  padding: 12px 15px;
+  margin-bottom: 8px;
+  background: white;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  border: 1px solid #ddd;
+}
+
+#flight_options li:hover {
+  background: #e8f3ff;
+  border-color: #b5d7ff;
+  transform: translateX(3px);
+}

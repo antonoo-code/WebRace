@@ -3,6 +3,11 @@ from flask_cors import CORS
 import json
 import secrets
 from game import Game
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
 
 
 players = {}
@@ -31,12 +36,14 @@ def new_game():
 def update_game():
     args = request.args
     id = args.get('id')
-    status = {'status': None}
+    status = {'stats': None}
     if id not in players:
         return status
+    game = players[id]['game']
     action = args.get('action')
     if action == 'fly':
-        pass
+        icao = args.get('icao')
+        status['stats']= game.do_fly(icao)
     elif action == 'dice':
         pass
     elif action == 'charge':
@@ -54,7 +61,7 @@ def game_status():
     id = args.get('id')
     game = players[id]['game']
     stats = game.get_statistics()
-    return {'status': stats}
-    
+    return {'stats': stats}
 if __name__ == '__main__':
-    app.run(use_reloader=True, host='127.0.0.1', port=3000)
+    app.run(use_reloader=True, host=os.environ.get('FLASK_HOST'), port=os.environ.get('FLASK_PORT'))
+    

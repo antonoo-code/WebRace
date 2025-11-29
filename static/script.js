@@ -1,6 +1,16 @@
+//Tästä alkaa Anton lentolista js
 const form = document.getElementById("startgame");
 const nameInput = document.getElementById("namebox");
 const flightOptions = document.getElementById("flight_options");
+
+function display_flightoptions(data) {
+  const ul = flightOptions.querySelector("ul");
+  data.stats.flight_options.forEach((flight) => {
+    const li = document.createElement("li");
+    li.textContent = flight.icao + ", " + flight.name;
+    ul.appendChild(li);
+  });
+}
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -8,12 +18,23 @@ form.addEventListener("submit", async (e) => {
   const response = await fetch("/game?name=" + encodeURIComponent(name), {
     method: "POST",
   });
-  const data = await response.json();
+  console.log(response);
+  let data = await response.json();
+  const id = data.id;
 
+  display_flightoptions(data);
   const ul = flightOptions.querySelector("ul");
-  data.stats.flight_options.forEach((flight) => {
-    const li = document.createElement("li");
-    li.textContent = flight.icao + ", " + flight.name;
-    ul.appendChild(li);
+  ul.addEventListener("click", async (e) => {
+    if (e.target.tagName === "LI") {
+      icao = e.target.textContent.split(",")[0];
+      ul.innerHTML = "";
+      const response = await fetch(`/game?action=fly&id=${id}&icao=${icao}`, {
+        method: "PUT",
+      });
+      data = await response.json();
+      display_flightoptions(data);
+    }
   });
 });
+
+//Tähä loppuu Anton lentolista js

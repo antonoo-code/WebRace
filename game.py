@@ -2,6 +2,10 @@ from geopy import distance
 import mysql.connector
 import random
 from pprint import pprint as ppp
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 NPC_NUBER_OF_OPTIONS = 6
 GAME_AIRPORT_LIMIT = 100
@@ -12,14 +16,14 @@ PLAYER_SUPERCHARGE_AMOUNT = 150
 
 
 
-connection = mysql.connector.connect(
-    port=3306,
-    host="127.0.0.1",
-    database = 'esim_peli', 
-    user='root',
-    password='Rekolammas123',
-    autocommit=True)
 
+connection = mysql.connector.connect(
+         host=os.environ.get('DB_HOST'),
+         port= 3306,
+         database=os.environ.get('DB_NAME'),
+         user=os.environ.get('DB_USER'),
+         password=os.environ.get('DB_PASS'),
+         autocommit=True)
 
 
 def airports():
@@ -174,7 +178,22 @@ class Game:
         self.game_running = True
         self.npc_range_1 = NPC_RANGE
         
+    def get_statistics(self):
+        in_range = player_airport_range_calc(self.current_airport,self.all_airports,self.player_range)
+        flight_options = []
+        for i in in_range:
+            target = {'icao': i[1], 'name': i[0], 'range': i[2]}
+            flight_options.append(target)
+        return {
+            'location': self.current_airport,
+            'player_range': self.player_range,
+            'flight_options': flight_options,
+            'goal_airport': self.goal_airport
+        }    
+        
+        
     def do_fly (self, icao):
+        """Tämä funktio suorittaa lentooperaation(myös npc) /game?action=fly tilanteessa"""
         selected_distance = calculate_distance(self.current_airport, icao)
         self.player_range -= selected_distance
         """update_location(icao, self.player_range)"""
@@ -193,18 +212,9 @@ class Game:
             self.npc_range_1 = NPC_RANGE
         if self.current_airport == self.goal_airport or self.npc_current_airport == self.goal_airport:
             self.game_running == False
+        return self.get_statistics()
             
-    def get_statistics(self):
-        in_range = player_airport_range_calc(self.current_airport,self.all_airports,self.player_range)
-        flight_options = []
-        for i in in_range:
-            target = {'icao': i[1], 'name': i[0], 'range': i[2]}
-            flight_options.append(target)
-        return {
-            'location': self.current_airport,
-            'player_range': self.player_range,
-            'flight_options': flight_options
-        }
+
     
 """
 g = Game(0)
