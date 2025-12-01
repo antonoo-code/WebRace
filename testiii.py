@@ -1,6 +1,6 @@
 
-''' laitetaan game classin sisään'''
-def lataa(self):
+''' laitetaan game classin sisää varmaa pitaa lisaa kaikkiin myös että möttönen liikkuu samalla'''
+def charge(self):
     self.player_range = MAX_PLAYER_RANGE
     self.player_turns = self.player_turns + 1
     #consoleen ilmotus että akku ladattu täyteen
@@ -9,6 +9,10 @@ def supercharge(self):
     self.player_range = self.player_range + PLAYER_SUPERCHARGE_AMOUNT
     self.player_turns = self.player_turns + 1
     #consoleen ilmotus että superchargettu myös pitää saada nappi muuttumaan lataa tai supercharge
+
+def mismottone(self):
+    self.player_turns = self.player_turns + 1
+    #consoleen kertoo möttösen sijainnin
 
 def throw_dice(self):
     """heittää noppaa 1-6."""
@@ -30,7 +34,7 @@ def throw_dice(self):
 
 # html napit
 '''
-<button type="noppa">Click Me!</button>
-<button type="lataa">Click Me!</button>
-<button type="möttösen sijainti">Click Me!</button>
+<button type="dice">Click Me!</button>
+<button type="charge">Click Me!</button>
+<button type="display">Click Me!</button>
 '''
