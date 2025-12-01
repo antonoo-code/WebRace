@@ -26,7 +26,7 @@ def throw_dice(self):
     elif throw_dice == 4: #raffle viesti:Hävisit lentokoneesi pokerissa, onneksi löysit paikkaliselta kirppikseltä käytetyn lentokoneen
         MAX_PLAYER_RANGE = MAX_PLAYER_RANGE - 200
         self.player_range = MAX_PLAYER_RANGE
-    elif throw_dice == 5: #kakka viesti:kakkasit huosuun xd
+    elif throw_dice == 5: #kakka viesti:kakkasit huosuun xdd
 
 # html napit
 '''
