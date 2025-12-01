@@ -10,7 +10,7 @@ def supercharge(self):
     self.player_turns = self.player_turns + 1
     #consoleen ilmotus että superchargettu myös pitää saada nappi muuttumaan lataa tai supercharge välillä
 
-def mismottone(self):
+def locationQuery(self):
     self.player_turns = self.player_turns + 1
     #consoleen kertoo möttösen sijainnin
 
@@ -34,7 +34,16 @@ def throw_dice(self):
 
 # html napit
 '''
-<button type="dice">Click Me!</button>
-<button type="charge">Click Me!</button>
-<button type="display">Click Me!</button>
+<form action="/throw" method="POST">
+    <button type="submit">throw</button>
+</form>
+<form action="/locationquery" method="POST">
+    <button type="submit">locationquery</button>
+</form>
+<form action="/charge" method="POST">
+    <button type="submit">charge</button>
+</form>
+<form action="/supercharge" method="POST">
+    <button type="submit">supercharge</button>
+</form>
 '''
