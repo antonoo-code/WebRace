@@ -8,7 +8,7 @@ def charge(self):
 def supercharge(self):
     self.player_range = self.player_range + PLAYER_SUPERCHARGE_AMOUNT
     self.player_turns = self.player_turns + 1
-    #consoleen ilmotus että superchargettu myös pitää saada nappi muuttumaan lataa tai supercharge
+    #consoleen ilmotus että superchargettu myös pitää saada nappi muuttumaan lataa tai supercharge välillä
 
 def mismottone(self):
     self.player_turns = self.player_turns + 1
