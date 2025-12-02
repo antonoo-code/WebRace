@@ -218,7 +218,7 @@ class Game:
     def charge(self):
         self.player_range = MAX_PLAYER_RANGE
         #consoleen ilmotus että akku ladattu täyteen
-    
+    print("hello")
     
     
 """
