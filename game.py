@@ -214,6 +214,11 @@ class Game:
             self.game_running == False
         return self.get_statistics()
     
+    ''' laitetaan game classin sisää varmaa pitaa lisaa kaikkiin myös että möttönen liikkuu samalla'''
+    def charge(self):
+        self.player_range = MAX_PLAYER_RANGE
+        #consoleen ilmotus että akku ladattu täyteen
+    
     
     
 """
