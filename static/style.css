@@ -29,3 +29,9 @@
   border-color: #b5d7ff;
   transform: translateX(3px);
 }
+
+#map {
+    height: 500px;
+    width: 50%;
+    min-height: 500px;
+}

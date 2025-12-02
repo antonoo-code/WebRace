@@ -3,11 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <title>WebRace</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"/>
     <link href="/static/style.css" rel="stylesheet" />
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" defer></script>
     <script src="/static/script.js" defer></script>
   </head>
   <body>
     <h1>WebRace</h1>
+    <div id="map"></div>
     <div id="start">
       <form id="startgame" action="/game" method="POST">
         <input
