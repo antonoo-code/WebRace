@@ -5,7 +5,7 @@ from pprint import pprint as ppp
 from dotenv import load_dotenv
 import os
 
-load_dotenv()
+load_dotenv('./.env')
 
 NPC_NUBER_OF_OPTIONS = 6
 GAME_AIRPORT_LIMIT = 100
