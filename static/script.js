@@ -18,7 +18,7 @@ function display_flightoptions(data) {
     li.textContent = flight.icao + ", " + flight.name;
     ul.appendChild(li);
   });
-  display_playerRange(data);
+  ///display_playerRange(data);
 }
 
 form.addEventListener("submit", async (e) => {
@@ -37,12 +37,9 @@ form.addEventListener("submit", async (e) => {
     if (e.target.tagName === "LI") {
       icao = e.target.textContent.split(",")[0];
       ul.innerHTML = "";
-      const response = await fetch(
-        `/game?action=fly&id=${id}&icao=${icao}&player_range=${player_range}`,
-        {
-          method: "PUT",
-        }
-      );
+      const response = await fetch(`/game?action=fly&id=${id}&icao=${icao}`, {
+        method: "PUT",
+      });
       data = await response.json();
       display_flightoptions(data);
     }
