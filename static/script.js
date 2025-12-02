@@ -4,12 +4,12 @@ const nameInput = document.getElementById("namebox");
 const flightOptions = document.getElementById("flight_options");
 const range = document.getElementById("range");
 
-function display_playerRange(data) {
-  const a = flightOptions.querySelector("range");
-  //const ra = document.createElement("ra");
-  a.textContent = data.stats.player_range;
-  //a.appendChild(ra);
-}
+//function display_playerRange(data) {
+// const a = flightOptions.querySelector("range");
+//const ra = document.createElement("ra");
+// a.textContent = data.stats.player_range;
+//a.appendChild(ra);
+//}
 
 function display_flightoptions(data) {
   const ul = flightOptions.querySelector("ul");
@@ -51,11 +51,10 @@ form.addEventListener("submit", async (e) => {
 
 //Tähä loppuu Anton lentolista js
 
-
 // Kartta(Rohan)
-const map = L.map("map", {tap: false});
+const map = L.map("map", { tap: false });
 L.tileLayer("https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}", {
   maxZoom: 20,
   subdomains: ["mt0", "mt1", "mt2", "mt3"],
-}).addTo(map)
+}).addTo(map);
 map.setView([60, 24], 7);

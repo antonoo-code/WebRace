@@ -217,8 +217,40 @@ class Game:
     ''' laitetaan game classin sisää varmaa pitaa lisaa kaikkiin myös että möttönen liikkuu samalla'''
     def charge(self):
         self.player_range = MAX_PLAYER_RANGE
+        self.npc_destination = main_npc_flight_fuunction(self.npc_current_airport,self.all_airports, self.npc_range_1, self.goal_airport, self.NPC_visited_ports)
+        if self.npc_destination == None:
+            self.npc_range_1 = self.npc_range_1 + NPC_SUPERCHARGE_AMOUNT
+            do_run = False
+        elif self.npc_range_1 >= NPC_RANGE/2 :
+            npc_selected_distance = calculate_distance(self.npc_current_airport, self.npc_destination)
+            self.npc_range_1  -= npc_selected_distance
+            """update_location(self.npc_destination, npc_range_1)"""
+            self.npc_current_airport = self.npc_destination
+            do_run = False
+        else:
+            self.npc_range_1 = NPC_RANGE
+        if self.current_airport == self.goal_airport or self.npc_current_airport == self.goal_airport:
+            self.game_running == False
+        return self.get_statistics()
         #consoleen ilmotus että akku ladattu täyteen
-    print("hello")
+        
+    def throw_dice(self):
+        """heittää noppaa 1-6."""
+        self.player_turns = self.player_turns + 1
+        throw_dice = random.randint(0, 5)
+        if throw_dice == 0: #salaman isku consoleen viesti: Salama iski koneen akkuun, sait akun täyteen ja 200km ylimääräistä lentoa!
+            self.player_range = MAX_PLAYER_RANGE + 200
+        elif throw_dice == 1: #passi consoleen viesti: Jäit tullissa kiinni vanhasta passista, sinun on palattava takaisin lähtömaahan.
+            self.current_airport = self.start_airport
+        elif throw_dice == 2: #presidentti viesti consoleen: Tasavallan presidentti on huomioinut teidän kilpailun ja myönsi sinulle tuliterän lentokoneen!
+            MAX_PLAYER_RANGE = MAX_PLAYER_RANGE + 100
+            self.player_range = MAX_PLAYER_RANGE
+        elif throw_dice == 3: #fatigue viesti:Olet väsynyt, nukut pommiin ja rangesi tippui nollaan.
+            self.player_range = 0
+        elif throw_dice == 4: #raffle viesti:Hävisit lentokoneesi pokerissa, onneksi löysit paikkaliselta kirppikseltä käytetyn lentokoneen
+            MAX_PLAYER_RANGE = MAX_PLAYER_RANGE - 200
+            self.player_range = MAX_PLAYER_RANGE
+        elif throw_dice == 5: #kakka viesti:kakkasit huosuun xdd
     
     
 """
