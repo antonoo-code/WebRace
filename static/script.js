@@ -18,7 +18,7 @@ function display_flightoptions(data) {
     li.textContent = flight.icao + ", " + flight.name;
     ul.appendChild(li);
   });
-  display_playerRange(data);
+  ///display_playerRange(data);
 }
 
 form.addEventListener("submit", async (e) => {
