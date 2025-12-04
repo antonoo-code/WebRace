@@ -44,6 +44,16 @@ form.addEventListener("submit", async (e) => {
       display_flightoptions(data);
     }
   });
+  //eero nappi
+    function throwDice() {
+        fetch(`/game?action=dice&id=${id}`, {
+            method: "PUT"
+    });
+    function charge() {
+        fetch(`/game?action=dice&id=${id}`, {
+            method: "PUT"
+    });
+}
 });
 
 //Tähä loppuu Anton lentolista js
@@ -55,3 +65,6 @@ L.tileLayer("https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}", {
   subdomains: ["mt0", "mt1", "mt2", "mt3"],
 }).addTo(map);
 map.setView([60, 24], 7);
+
+
+
