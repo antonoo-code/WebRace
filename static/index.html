@@ -7,6 +7,11 @@
     <link href="/static/style.css" rel="stylesheet" />
     <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" defer></script>
     <script src="/static/script.js" defer></script>
+      <style>
+          #map {
+              height: 500px;
+          }
+      </style>
   </head>
   <body>
     <h1>WebRace</h1>
@@ -33,7 +38,6 @@
     <nav>
         <ul>
             <li><a href="#">Ohjeet</a></li>
-            <li><a href="#">Möttösen sijainti</a></li>
             <li><a href="#">Lentokoneen range</a></li>
         </ul>
     </nav>
@@ -44,12 +48,31 @@
                 <li><b>Matka maaliin</b></li>
             </ul>
                     <div class="chat-container">
-                        <div class="kuva">
-                    <img src="testi.rohan.js" alt="kartta">
-                        </div>
-                    <div class="lentolista">
-                    MUUTTUVA LENTOLISTA TÄHÄN
-                </div>
+                        <div id="map"></div>
+                        <script>
+                            const map = L.map("map", {tap: false});
+                            L.tileLayer("https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}", {
+                            maxZoom: 20,
+                            subdomains: ["mt0", "mt1", "mt2", "mt3"],
+                            }).addTo(map)
+                            map.setView([60, 24], 7);
+                        </script>
+                        <div id="flight_options"></div>
+                        <script>
+                            display_flightoptions(data);
+                            const ul = flightOptions.querySelector("ul");
+                            ul.addEventListener("click", async (e) => {
+                            if (e.target.tagName === "LI") {
+                            icao = e.target.textContent.split(",")[0];
+                            ul.innerHTML = "";
+                            const response = await fetch(`/game?action=fly&id=${id}&icao=${icao}`, {
+                            method: "PUT",
+                            });
+                                data = await response.json();
+                                display_flightoptions(data);
+                                }
+                            });
+                        </script>
                     </div>
         </section>
     </main>
