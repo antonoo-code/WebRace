@@ -248,7 +248,7 @@ class Game:
         stats = self.get_statistics()
         throw_dice = random.randint(0, 5)
         if throw_dice == 0: #salaman isku consoleen viesti: Salama iski koneen akkuun, sait akun täyteen ja 200km ylimääräistä lentoa!
-            self.player_range = self.max_player_range + 200
+            self.player_range = self.player_range + 200
             stats['dice_message']="salaman isku consoleen viesti: Salama iski koneen akkuun, sait akun täyteen ja 200km ylimääräistä lentoa!"
         elif throw_dice == 1: #passi consoleen viesti: Jäit tullissa kiinni vanhasta passista, sinun on palattava takaisin lähtömaahan.
             self.current_airport = self.start_airport
