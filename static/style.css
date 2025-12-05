@@ -1,5 +1,5 @@
 #flight_options {
-  width: 300px;
+  width: 600px;
   margin: 20px auto;
   padding: 10px;
   border-radius: 10px;
@@ -83,7 +83,6 @@ nav ul {
 
 nav li {
   margin: 0 150px 0 150px;
-
 }
 
 nav a {

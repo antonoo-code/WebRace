@@ -192,8 +192,19 @@ class Game:
             'flight_options': flight_options,
             'goal_airport': self.goal_airport,
             'goal_airport_name':get_airport_name(self.goal_airport),
-            'goal_distance':calculate_distance(self.current_airport, self.goal_airport)
-        }    
+            'goal_distance':calculate_distance(self.current_airport, self.goal_airport),
+            'can_supercharge': True if self.player_range >= self.max_player_range else False,
+            'goal_reached_by': self.goal_reached_by(),
+            'current_airport_name':get_airport_name(self.current_airport)
+        }  
+          
+    def goal_reached_by(self):
+        if self.current_airport == self.goal_airport:
+            return "player"
+        elif self.npc_current_airport == self.goal_airport:
+            return "npc"
+        else:
+            return "none"
         
     def moveNPC(self):
         self.npc_destination = main_npc_flight_fuunction(self.npc_current_airport,self.all_airports, self.npc_range_1, self.goal_airport, self.NPC_visited_ports)
@@ -223,9 +234,14 @@ class Game:
     
     ''' laitetaan game classin sisää varmaa pitaa lisaa kaikkiin myös että möttönen liikkuu samalla'''
     def charge(self):
-        self.player_range = self.max_player_range
+        if self.player_range < self.max_player_range:
+            self.player_range = self.max_player_range
+        else:
+            self.player_range += 150
         self.moveNPC()
         return self.get_statistics()
+    
+        
         
     def dice(self):
         """heittää noppaa 1-6."""
