@@ -42,12 +42,6 @@ form.addEventListener("submit", async (e) => {
       display_flightoptions(data);
     }
   });
-  //eero nappi
-  window.throwDice = async function () {
-    fetch(`/game?action=dice&id=${id}`, {
-      method: "PUT",
-    });
-  };
 
   window.charge = async function () {
     const response = await fetch(`/game?action=charge&id=${id}`, {
@@ -57,6 +51,7 @@ form.addEventListener("submit", async (e) => {
     console.log(data);
     display_flightoptions(data);
   };
+
   window.findNPC = async function () {
     const response = await fetch(`/game?action=locationQuery&id=${id}`, {
       method: "PUT",
@@ -65,7 +60,22 @@ form.addEventListener("submit", async (e) => {
     console.log(data);
     display_flightoptions(data);
     const div = document.getElementById("logit");
-    div.innerHTML = "Möttösen sijainti on " + data.stats.npc_airport.name;
+    div.innerHTML =
+      "Möttösen sijainti on " +
+      data.stats.npc_airport.name +
+      "<br>" +
+      div.innerHTML;
+  };
+
+  window.throwDice = async function () {
+    const response = await fetch(`/game?action=dice&id=${id}`, {
+      method: "PUT",
+    });
+    let data = await response.json();
+    console.log(data);
+    display_flightoptions(data);
+    const div = document.getElementById("logit");
+    div.innerHTML = data.stats.dice_message + "<br>" + div.innerHTML;
   };
 });
 

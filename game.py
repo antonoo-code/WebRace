@@ -173,6 +173,7 @@ class Game:
         self.player_turns = 0
         self.npc_turns = 0
         self.player_range = MAX_PLAYER_RANGE
+        self.max_player_range = MAX_PLAYER_RANGE
         self.npc_range_1 = NPC_RANGE
         self.difficulty = difficulty
         self.NPC_visited_ports = set()
@@ -222,26 +223,36 @@ class Game:
     
     ''' laitetaan game classin sisää varmaa pitaa lisaa kaikkiin myös että möttönen liikkuu samalla'''
     def charge(self):
-        self.player_range = MAX_PLAYER_RANGE
+        self.player_range = self.max_player_range
         self.moveNPC()
         return self.get_statistics()
         
-    def throw_dice(self):
+    def dice(self):
         """heittää noppaa 1-6."""
-        self.player_turns = self.player_turns + 1
+        stats = self.get_statistics()
         throw_dice = random.randint(0, 5)
         if throw_dice == 0: #salaman isku consoleen viesti: Salama iski koneen akkuun, sait akun täyteen ja 200km ylimääräistä lentoa!
-            self.player_range = MAX_PLAYER_RANGE + 200
+            self.player_range = self.max_player_range + 200
+            stats['dice_message']="salaman isku consoleen viesti: Salama iski koneen akkuun, sait akun täyteen ja 200km ylimääräistä lentoa!"
         elif throw_dice == 1: #passi consoleen viesti: Jäit tullissa kiinni vanhasta passista, sinun on palattava takaisin lähtömaahan.
             self.current_airport = self.start_airport
+            stats['dice_message']="Jäit tullissa kiinni vanhasta passista, sinun on palattava takaisin lähtömaahan."
         elif throw_dice == 2: #presidentti viesti consoleen: Tasavallan presidentti on huomioinut teidän kilpailun ja myönsi sinulle tuliterän lentokoneen!
-            MAX_PLAYER_RANGE = MAX_PLAYER_RANGE + 100
-            self.player_range = MAX_PLAYER_RANGE
+            self.max_player_range = self.max_player_range + 100
+            self.player_range = self.max_player_range
+            stats['dice_message']="Tasavallan presidentti on huomioinut teidän kilpailun ja myönsi sinulle tuliterän lentokoneen!"
         elif throw_dice == 3: #fatigue viesti:Olet väsynyt, nukut pommiin ja rangesi tippui nollaan.
             self.player_range = 0
+            stats['dice_message']="Olet väsynyt, nukut pommiin ja rangesi tippui nollaan."
         elif throw_dice == 4: #raffle viesti:Hävisit lentokoneesi pokerissa, onneksi löysit paikkaliselta kirppikseltä käytetyn lentokoneen
-            MAX_PLAYER_RANGE = MAX_PLAYER_RANGE - 200
-            self.player_range = MAX_PLAYER_RANGE
+            self.max_player_range = self.max_player_range - 200
+            self.player_range = self.max_player_range
+            stats['dice_message']="Hävisit lentokoneesi pokerissa, onneksi löysit paikkaliselta kirppikseltä käytetyn lentokoneen"
+        else:
+            stats['dice_message']="Noppa meni hukkaan!Jäit tullissa kiinni vanhasta passista, sinun on palattava takaisin lähtömaahan."
+        self.moveNPC()
+        print(stats)
+        return stats
     
     def findNPC(self):
         npc_airport = airport_data(self.npc_current_airport)

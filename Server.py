@@ -45,7 +45,7 @@ def update_game():
         icao = args.get('icao')
         status['stats']= game.do_fly(icao)
     elif action == 'dice':
-        status['stats'] = game.throw_dice()
+        status['stats'] = game.dice()
     elif action == 'charge':
         status['stats'] = game.charge()
     elif action == 'supercharge':
