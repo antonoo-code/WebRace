@@ -246,12 +246,14 @@ class Game:
     def dice(self):
         """heittää noppaa 1-6."""
         stats = self.get_statistics()
-        throw_dice = random.randint(0, 5)
+        throw_dice = random.randint(0, 4)
         if throw_dice == 0: #salaman isku consoleen viesti: Salama iski koneen akkuun, sait akun täyteen ja 200km ylimääräistä lentoa!
             self.player_range = self.player_range + 200
-            stats['dice_message']="salaman isku consoleen viesti: Salama iski koneen akkuun, sait akun täyteen ja 200km ylimääräistä lentoa!"
+            stats['dice_message']="Salama iski koneen akkuun, sait akun täyteen ja 200km ylimääräistä lentoa!"
         elif throw_dice == 1: #passi consoleen viesti: Jäit tullissa kiinni vanhasta passista, sinun on palattava takaisin lähtömaahan.
             self.current_airport = self.start_airport
+            stats['location']=self.start_airport
+            stats['current_airport_name']=get_airport_name(self.current_airport)
             stats['dice_message']="Jäit tullissa kiinni vanhasta passista, sinun on palattava takaisin lähtömaahan."
         elif throw_dice == 2: #presidentti viesti consoleen: Tasavallan presidentti on huomioinut teidän kilpailun ja myönsi sinulle tuliterän lentokoneen!
             self.max_player_range = self.max_player_range + 100
@@ -265,7 +267,9 @@ class Game:
             self.player_range = self.max_player_range
             stats['dice_message']="Hävisit lentokoneesi pokerissa, onneksi löysit paikkaliselta kirppikseltä käytetyn lentokoneen"
         else:
-            stats['dice_message']="Noppa meni hukkaan!Jäit tullissa kiinni vanhasta passista, sinun on palattava takaisin lähtömaahan."
+            stats['dice_message']="Noppa meni hukkaan!" #ei pitäs tulla muute o koodi rikki
+        stats['player_range']=self.player_range
+        stats['can_supercharge'] = True if self.player_range >= self.max_player_range else False
         self.moveNPC()
         print(stats)
         return stats

@@ -93,7 +93,7 @@ form.addEventListener("submit", async (e) => {
     });
     let data = await response.json();
     console.log(data);
-    range = data.player_range;
+    //range = data.player_range;
     display_flightoptions(data);
     const div = document.getElementById("logit");
     div.innerHTML = data.stats.dice_message + "<br>" + div.innerHTML;
