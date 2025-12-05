@@ -44,8 +44,8 @@
     </div>
         <div id="navcss">
             <ul>
-                <li><b>Maali</b></li>
-                <li><b>Matka maaliin</b></li>
+                <li id="maali"><b>Maali</b></li>
+                <li id="matka"><b>Matka maaliin</b></li>
             </ul>
                     <div class="chat-container"></div>
                        <div id="map"></div>
@@ -69,10 +69,10 @@
         <div class="buttons">
             <button onclick="throwDice()">Heitä</button>
             <button onclick="charge()">Lataa</button>
-            <button>Sijainti</button>
+            <button onclick="findNPC()">Möttösen sijainti</button>
 </div>
-        <div class="logit">
-            CHATLOGIT
+        <div class="logit" id="logit">
+            
         </div>
     </footer>
 

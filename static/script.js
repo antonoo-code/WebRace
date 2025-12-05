@@ -3,6 +3,8 @@ const form = document.getElementById("startgame");
 const nameInput = document.getElementById("namebox");
 const flightOptions = document.getElementById("flight_options");
 const range = document.getElementById("range");
+const goal = document.getElementById("maali");
+const distance2goal = document.getElementById("matka");
 
 function display_flightoptions(data) {
   const ul = flightOptions.querySelector("ul");
@@ -13,6 +15,8 @@ function display_flightoptions(data) {
     ul.appendChild(li);
   });
   range.innerHTML = String(data.stats.player_range);
+  goal.innerHTML = String(data.stats.goal_airport_name);
+  distance2goal.innerHTML = String(data.stats.goal_distance);
 }
 
 form.addEventListener("submit", async (e) => {
@@ -50,7 +54,18 @@ form.addEventListener("submit", async (e) => {
       method: "PUT",
     });
     let data = await response.json();
+    console.log(data);
     display_flightoptions(data);
+  };
+  window.findNPC = async function () {
+    const response = await fetch(`/game?action=locationQuery&id=${id}`, {
+      method: "PUT",
+    });
+    let data = await response.json();
+    console.log(data);
+    display_flightoptions(data);
+    const div = document.getElementById("logit");
+    div.innerHTML = "Möttösen sijainti on " + data.stats.npc_airport.name;
   };
 });
 

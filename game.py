@@ -189,51 +189,42 @@ class Game:
             'location': self.current_airport,
             'player_range': self.player_range,
             'flight_options': flight_options,
-            'goal_airport': self.goal_airport
+            'goal_airport': self.goal_airport,
+            'goal_airport_name':get_airport_name(self.goal_airport),
+            'goal_distance':calculate_distance(self.current_airport, self.goal_airport)
         }    
         
-        
+    def moveNPC(self):
+        self.npc_destination = main_npc_flight_fuunction(self.npc_current_airport,self.all_airports, self.npc_range_1, self.goal_airport, self.NPC_visited_ports)
+        if self.npc_destination == None:
+            self.npc_range_1 = self.npc_range_1 + NPC_SUPERCHARGE_AMOUNT
+            do_run = False
+        elif self.npc_range_1 >= NPC_RANGE/2 :
+            npc_selected_distance = calculate_distance(self.npc_current_airport, self.npc_destination)
+            self.npc_range_1  -= npc_selected_distance
+            """update_location(self.npc_destination, npc_range_1)"""
+            self.npc_current_airport = self.npc_destination
+            do_run = False
+        else:
+            self.npc_range_1 = NPC_RANGE
+        if self.current_airport == self.goal_airport or self.npc_current_airport == self.goal_airport:
+            self.game_running == False
+        return self.get_statistics()
+     
     def do_fly (self, icao):
         """Tämä funktio suorittaa lentooperaation(myös npc) /game?action=fly tilanteessa"""
         selected_distance = calculate_distance(self.current_airport, icao)
         self.player_range -= selected_distance
         """update_location(icao, self.player_range)"""
         self.current_airport = icao
-        self.npc_destination = main_npc_flight_fuunction(self.npc_current_airport,self.all_airports, self.npc_range_1, self.goal_airport, self.NPC_visited_ports)
-        if self.npc_destination == None:
-            self.npc_range_1 = self.npc_range_1 + NPC_SUPERCHARGE_AMOUNT
-            do_run = False
-        elif self.npc_range_1 >= NPC_RANGE/2 :
-            npc_selected_distance = calculate_distance(self.npc_current_airport, self.npc_destination)
-            self.npc_range_1  -= npc_selected_distance
-            """update_location(self.npc_destination, npc_range_1)"""
-            self.npc_current_airport = self.npc_destination
-            do_run = False
-        else:
-            self.npc_range_1 = NPC_RANGE
-        if self.current_airport == self.goal_airport or self.npc_current_airport == self.goal_airport:
-            self.game_running == False
+        self.moveNPC()
         return self.get_statistics()
     
     ''' laitetaan game classin sisää varmaa pitaa lisaa kaikkiin myös että möttönen liikkuu samalla'''
     def charge(self):
         self.player_range = MAX_PLAYER_RANGE
-        self.npc_destination = main_npc_flight_fuunction(self.npc_current_airport,self.all_airports, self.npc_range_1, self.goal_airport, self.NPC_visited_ports)
-        if self.npc_destination == None:
-            self.npc_range_1 = self.npc_range_1 + NPC_SUPERCHARGE_AMOUNT
-            do_run = False
-        elif self.npc_range_1 >= NPC_RANGE/2 :
-            npc_selected_distance = calculate_distance(self.npc_current_airport, self.npc_destination)
-            self.npc_range_1  -= npc_selected_distance
-            """update_location(self.npc_destination, npc_range_1)"""
-            self.npc_current_airport = self.npc_destination
-            do_run = False
-        else:
-            self.npc_range_1 = NPC_RANGE
-        if self.current_airport == self.goal_airport or self.npc_current_airport == self.goal_airport:
-            self.game_running == False
+        self.moveNPC()
         return self.get_statistics()
-        #consoleen ilmotus että akku ladattu täyteen
         
     def throw_dice(self):
         """heittää noppaa 1-6."""
@@ -251,7 +242,13 @@ class Game:
         elif throw_dice == 4: #raffle viesti:Hävisit lentokoneesi pokerissa, onneksi löysit paikkaliselta kirppikseltä käytetyn lentokoneen
             MAX_PLAYER_RANGE = MAX_PLAYER_RANGE - 200
             self.player_range = MAX_PLAYER_RANGE
-        """elif throw_dice == 5: #kakka viesti:kakkasit huosuun xdd"""
+    
+    def findNPC(self):
+        npc_airport = airport_data(self.npc_current_airport)
+        stats = self.get_statistics()
+        stats['npc_airport']= npc_airport
+        self.moveNPC()
+        return stats
     
     
 """
