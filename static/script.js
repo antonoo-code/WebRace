@@ -58,15 +58,17 @@ form.addEventListener("submit", async (e) => {
     }
   });
   //eero nappi
-    function throwDice() {
+    window.throwDice = function () {
         fetch(`/game?action=dice&id=${id}`, {
-            method: "PUT"
-    });
-    function charge() {
-        fetch(`/game?action=dice&id=${id}`, {
-            method: "PUT"
-    });
-}
+            method: "PUT",
+        });
+    }
+
+    window.charge = function () {
+        fetch(`/game?action=charge&id=${id}`, {
+            method: "PUT",
+        });
+    }
 });
 
 //Tähä loppuu Anton lentolista js
