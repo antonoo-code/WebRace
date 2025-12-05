@@ -2,7 +2,7 @@ from flask import Flask, request, send_from_directory
 from flask_cors import CORS
 import json
 import secrets
-from game import Game
+from game import Game, get_airport_name
 from dotenv import load_dotenv
 import os
 
@@ -51,7 +51,10 @@ def update_game():
     elif action == 'supercharge':
         pass
     elif action == 'locationQuery':
-        pass 
+        status['stats']= game.get_statistics()
+        npc_icao = game.npc_current_airport
+        npc_airport = get_airport_name(npc_icao)
+        status['npc_airport']= npc_airport
     
     return status
 

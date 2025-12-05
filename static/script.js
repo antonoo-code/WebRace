@@ -4,28 +4,15 @@ const nameInput = document.getElementById("namebox");
 const flightOptions = document.getElementById("flight_options");
 const range = document.getElementById("range");
 
-/*
-function display_playerRange(data) {
-  const div = document.getElementById("Range");
-  div.textContent = `Range: ${data.stats.player_range}`;
-}
-
-function pollRange() {
-  fetch(`/game?id=${id}`)
-    .then((r) => r.json())
-    .then((data) => display_playerRange(data));
-}
-
-setInterval(pollRange, 1000);
-*/
 function display_flightoptions(data) {
   const ul = flightOptions.querySelector("ul");
+  ul.innerHTML = "";
   data.stats.flight_options.forEach((flight) => {
     const li = document.createElement("li");
     li.textContent = flight.icao + ", " + flight.name;
     ul.appendChild(li);
   });
-  ///display_playerRange(data);
+  range.innerHTML = String(data.stats.player_range);
 }
 
 form.addEventListener("submit", async (e) => {
@@ -52,17 +39,17 @@ form.addEventListener("submit", async (e) => {
     }
   });
   //eero nappi
-  window.throwDice = function () {
+  window.throwDice = async function () {
     fetch(`/game?action=dice&id=${id}`, {
       method: "PUT",
     });
   };
 
-  window.charge = function () {
-    const response = fetch(`/game?action=charge&id=${id}`, {
+  window.charge = async function () {
+    const response = await fetch(`/game?action=charge&id=${id}`, {
       method: "PUT",
     });
-    data = response.json();
+    let data = await response.json();
     display_flightoptions(data);
   };
 });
