@@ -134,25 +134,7 @@ figure {
   gap: 200px;
   border-radius: 15px;
 }
-/*
-.kuva img {
-  width: 590px;
-  height: 450px;
-  border-radius: 15px;
-}
 
-.lentolista {
-  border: 1px solid #ccc;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  width: 570px;
-  height: 450px;
-  padding: 10px;
-  background: white;
-  border-radius: 15px;
-}
-*/
 footer {
   display: flex;
   align-items: flex-start;
