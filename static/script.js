@@ -10,7 +10,20 @@ const range = document.getElementById("range");
 // a.textContent = data.stats.player_range;
 //a.appendChild(ra);
 //}
+/*
+function display_playerRange(data) {
+    const div = document.getElementById("Range");
+    div.textContent = `Range: ${data.stats.player_range}`;
+}
 
+function pollRange() {
+    fetch(`/game?id=${id}`)
+        .then(r => r.json())
+        .then(data => display_playerRange(data));
+}
+
+setInterval(pollRange, 1000);
+*/
 function display_flightoptions(data) {
   const ul = flightOptions.querySelector("ul");
   data.stats.flight_options.forEach((flight) => {
