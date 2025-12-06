@@ -22,10 +22,10 @@ function display_flightoptions(data) {
       flight.icao + ", " + flight.name + " (" + flight.range + " Km)";
     ul.appendChild(li);
   });
-  range.innerHTML = String(data.stats.player_range);
-  goal.innerHTML = String(data.stats.goal_airport_name);
-  distance2goal.innerHTML = String(data.stats.goal_distance);
-  currentAirport.innerHTML = data.stats.current_airport_name;
+  range.innerHTML = String("Range: " + data.stats.player_range.toFixed(0));
+  goal.innerHTML = String("Maali: " + data.stats.goal_airport_name);
+  distance2goal.innerHTML = String("Matka maaliin: " + data.stats.goal_distance.toFixed(0));
+  currentAirport.innerHTML = "Sijainti: " + data.stats.current_airport_name;
   if (data.stats.can_supercharge === true) {
     console.log("supercharging");
     chargeButton.innerText = "Supercharge";
