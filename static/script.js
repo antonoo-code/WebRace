@@ -33,6 +33,7 @@ function display_flightoptions(data) {
     console.log("charging");
     chargeButton.innerText = "Lataa";
   }
+  updateMap(data);
 }
 
 form.addEventListener("submit", async (e) => {
@@ -102,3 +103,85 @@ form.addEventListener("submit", async (e) => {
 });
 
 //Tähä loppuu Anton lentolista js
+
+
+// Kartta alkaa tästä (Rohan)
+
+// Hakee lentokentan koordinaatit
+async function coordinates(icao) {
+  const response = await fetch(`/airport?icao=${icao}`);
+  const data = await response.json();
+  return [data.latitude_deg, data.longitude_deg];
+}
+
+// Päivittää kartan
+async function updateMap(data) {
+  if (!window.gameMap) return;
+
+  // Poista vanhat merkit
+  window.gameMap.eachLayer((layer) => {
+    if (layer instanceof L.Marker) {
+      window.gameMap.removeLayer(layer);
+    }
+  });
+
+  const stats = data.stats;
+  // Lisää pelaajan sijainnin
+  if (stats.location) {
+    const playerCoords = await coordinates(stats.location);
+
+    if (playerCoords) {
+      const playerMarker = L.marker(playerCoords, {
+        icon: L.divIcon({
+          className: "player-marker",
+          html: "📍",
+          size: [20,20]
+        })
+      }).addTo(window.gameMap);
+
+      playerMarker.bindPopup(`<b>${stats.current_airport_name}</b><br>Sijaintisi`).openPopup();
+      window.gameMap.setView(playerCoords, 7);
+    }
+  }
+
+  // Lentovaihtoehdot kartalle
+  if (stats.flight_options) {
+    for (const airport of stats.flight_options) {
+      if (airport.icao) {
+        const coords = await coordinates(airport.icao);
+
+        if (coords) {
+          const airportMarker = L.marker(coords, {
+            icon: L.divIcon({
+              className: "airport-marker",
+              html: '✈',
+              iconSize: [24, 24]
+            })
+          }).addTo(window.gameMap);
+
+          airportMarker.bindPopup(`
+          <b>${airport.name}</b><br>
+          ICAO: ${airport.icao}<br>
+          Etäisyys: ${airport.range} km`);
+        }
+      }
+    }
+  }
+
+  // Möttösen sijainti
+  if (stats.npc_airport && stats.npc_airport.icao) {
+    const mottonenCoords = await coordinates(stats.npc_airport.icao);
+
+    if (mottonenCoords) {
+      const mottonenMarker = L.marker(mottonenCoords, {
+        icon: L.divIcon({
+          className: "mottonen-marker",
+          html: "👤",
+          iconSize: [20, 20]
+        })
+      }).addTo(window.gameMap);
+
+      mottonenMarker.bindPopup(`<b>${stats.npc_airport.name}</b><br>Möttösen sijainti`);}
+  }}
+
+// tähän loppuu kartta (rohan)

@@ -69,12 +69,12 @@
 
                        <script>
                             document.addEventListener("DOMContentLoaded", function () {
-                            const map = L.map("map", {tap: false});
-                            L.tileLayer("https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}", {
-                            maxZoom: 20,
-                            subdomains: ["mt0", "mt1", "mt2", "mt3"],
-                            }).addTo(map);
-                            map.setView([60, 24], 7);});
+                            window.gameMap = L.map("map", {tap: false});
+                                L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", {
+                                    maxZoom: 19
+                            }).addTo(window.gameMap);
+                            window.gameMap.setView([61.9241, 25.7482], 6);
+                            });
                         </script>
 
         </div>

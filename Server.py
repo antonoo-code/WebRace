@@ -2,7 +2,7 @@ from flask import Flask, request, send_from_directory
 from flask_cors import CORS
 import json
 import secrets
-from game import Game
+from game import Game, airport_data
 from dotenv import load_dotenv
 import os
 
@@ -54,6 +54,13 @@ def update_game():
         status['stats']= game.findNPC()
     
     return status
+
+@app.route("/airport", methods=["GET"])
+def airport_info():
+    args = request.args
+    icao = args.get('icao')
+    data = airport_data(icao)
+    return data
 
 @app.route("/game", methods=["GET"])
 def game_status():
