@@ -37,6 +37,7 @@ function display_flightoptions(data) {
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
+  window.scrollBy({ top: 2000});
   let range = 0;
   const name = nameInput.value;
   const response = await fetch("/game?name=" + encodeURIComponent(name), {
