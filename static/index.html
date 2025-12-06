@@ -7,11 +7,29 @@
     <link href="/static/style.css" rel="stylesheet" />
     <script src="/static/script.js" defer></script>
       <style>
-          #map {
-              height: 500px;
-          }
-      </style>
-  </head>
+        #map {
+            height: 500px;
+        }
+        .sky {
+            position: absolute;
+            top: 30%;
+            right: 0;
+            z-index: 10;
+            animation: sky 10s linear 0s infinite reverse;
+        }
+        @keyframes sky {
+            from { right: 1px; }
+            to { right: 102%; }
+        }
+        .sky img {
+            width: 200px;
+        }
+    </style>
+</head>
+    <div class="sky">
+        <img src="static/plane.png" alt="Pilvi">
+    </div>
+
   
   <body>
     <div id="start">
@@ -26,8 +44,8 @@
       </form>
     </div>
   <div class="container">
-        <h1>Möttösen lentopeli</h1>
-    </div id="navcss">
+    <img src="static/mottonen.png" alt="Möttönen" style="width:400px;height:auto;">
+  </div>
     <div>
     <nav>
         <ul>
@@ -46,6 +64,7 @@
         <div id="navcss">
                     <div class="chat-container"></div>
                        <div id="map"></div>
+
                            <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" defer></script>
 
                        <script>
@@ -56,10 +75,8 @@
                             subdomains: ["mt0", "mt1", "mt2", "mt3"],
                             }).addTo(map);
                             map.setView([60, 24], 7);});
-                        </script> 
+                        </script>
 
-
-                    
         </div>
     </main>
     <footer class="Bottom">
