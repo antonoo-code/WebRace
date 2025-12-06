@@ -245,32 +245,30 @@ class Game:
         
     def dice(self):
         """heittää noppaa 1-6."""
-        stats = self.get_statistics()
+        message = ""
         throw_dice = random.randint(0, 4)
         if throw_dice == 0: #salaman isku consoleen viesti: Salama iski koneen akkuun, sait akun täyteen ja 200km ylimääräistä lentoa!
             self.player_range = self.player_range + 200
-            stats['dice_message']="Salama iski koneen akkuun, sait akun täyteen ja 200km ylimääräistä lentoa!"
+            message ="Salama iski koneen akkuun, sait akun täyteen ja 200km ylimääräistä lentoa!"
         elif throw_dice == 1: #passi consoleen viesti: Jäit tullissa kiinni vanhasta passista, sinun on palattava takaisin lähtömaahan.
             self.current_airport = self.start_airport
-            stats['location']=self.start_airport
-            stats['current_airport_name']=get_airport_name(self.current_airport)
-            stats['dice_message']="Jäit tullissa kiinni vanhasta passista, sinun on palattava takaisin lähtömaahan."
+            message ="Jäit tullissa kiinni vanhasta passista, sinun on palattava takaisin lähtömaahan."
         elif throw_dice == 2: #presidentti viesti consoleen: Tasavallan presidentti on huomioinut teidän kilpailun ja myönsi sinulle tuliterän lentokoneen!
             self.max_player_range = self.max_player_range + 100
             self.player_range = self.max_player_range
-            stats['dice_message']="Tasavallan presidentti on huomioinut teidän kilpailun ja myönsi sinulle tuliterän lentokoneen!"
+            message ="Tasavallan presidentti on huomioinut teidän kilpailun ja myönsi sinulle tuliterän lentokoneen!"
         elif throw_dice == 3: #fatigue viesti:Olet väsynyt, nukut pommiin ja rangesi tippui nollaan.
             self.player_range = 0
-            stats['dice_message']="Olet väsynyt, nukut pommiin ja rangesi tippui nollaan."
+            message ="Olet väsynyt, nukut pommiin ja rangesi tippui nollaan."
         elif throw_dice == 4: #raffle viesti:Hävisit lentokoneesi pokerissa, onneksi löysit paikkaliselta kirppikseltä käytetyn lentokoneen
             self.max_player_range = self.max_player_range - 200
             self.player_range = self.max_player_range
-            stats['dice_message']="Hävisit lentokoneesi pokerissa, onneksi löysit paikkaliselta kirppikseltä käytetyn lentokoneen"
+            message ="Hävisit lentokoneesi pokerissa, onneksi löysit paikkaliselta kirppikseltä käytetyn lentokoneen"
         else:
-            stats['dice_message']="Noppa meni hukkaan!" #ei pitäs tulla muute o koodi rikki
-        stats['player_range']=self.player_range
-        stats['can_supercharge'] = True if self.player_range >= self.max_player_range else False
+            message ="Noppa meni hukkaan!" #ei pitäs tulla muute o koodi rikki
         self.moveNPC()
+        stats = self.get_statistics()
+        stats['dice_message']= message
         print(stats)
         return stats
     
