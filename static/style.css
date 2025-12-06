@@ -1,10 +1,21 @@
 #start {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh; /* täysi selainikkuna */
-  background: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: url("sky.jpg") no-repeat center center;
+    background-size: cover;
+    overflow: hidden;
+    position: relative;
+}
+#start form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    background: rgba(255,255,255,0.8);
+    padding: 20px;
+    border-radius: 15px;
 }
 
 #flight_options {
@@ -16,6 +27,7 @@
   height: 490px;
   overflow-y: scroll;
   flex-shrink: 0;
+  z-index: 20;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
