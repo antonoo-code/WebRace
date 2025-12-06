@@ -38,6 +38,7 @@
   height: 200px;
   width: 700px;
   min-height: 200px;
+  margin: 20px 20px 20px 0;
 }
 
 body {
@@ -82,7 +83,7 @@ nav ul {
 }
 
 nav li {
-  margin: 0 150px 0 150px;
+  margin: 0 90px 0 90px;
 }
 
 nav a {
@@ -157,21 +158,27 @@ footer {
 
 .buttons {
   display: flex;
-  gap: 150px;
+  gap: 120px;
   border-radius: 15px;
+  padding: 0 0 0 152px;
 }
 
 .buttons button {
-  padding: 30px 40px;
+  padding: 30px 22px;
   font-size: 1rem;
+  background-color: dodgerblue;
 }
 
+.buttons button:hover {
+    background-color: blue;
+}
 .logit {
   border: 1px solid #ccc;
   flex: 1;
   width: 400px;
-  height: 150px;
+  height: 120px;
   padding: 10px;
   background: white;
   border-radius: 15px;
+  overflow-y: scroll;
 }
