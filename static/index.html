@@ -5,7 +5,6 @@
     <title>WebRace</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"/>
     <link href="/static/style.css" rel="stylesheet" />
-    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" defer></script>
     <script src="/static/script.js" defer></script>
       <style>
           #map {
@@ -13,9 +12,9 @@
           }
       </style>
   </head>
+  
   <body>
     <h1>WebRace</h1>
-    <div id="map"></div>
     <div id="start">
       <form id="startgame" action="/game" method="POST">
         <input
@@ -27,63 +26,53 @@
         <button type="submit">Start game</button>
       </form>
     </div>
-    <div id="flight_options">
+  <div class="container">
+        <h1>Möttösen lentopeli</h1>
+    </div id="navcss">
+    <div>
+    <nav>
+        <ul>
+            <li id="current_airport"><h1>Nykyinen lentokenttä</h1></li>
+            <li id="range"><h1>Lentokoneen range</h1></li>
+        </ul>
+    </nav>
+    </div>
+    <main>
+        <div id="flight_options">
       <a id="range"></a>
       <ul></ul>
     </div>
-  <div class="container">
-        <h1>Möttösen lentopeli</h1>
-    </div>
-    </header>
-    <nav>
-        <ul>
-            <li><a href="#">Ohjeet</a></li>
-            <li><a href="#">Lentokoneen range</a></li>
-        </ul>
-    </nav>
-    <main>
-        <section>
+        <div id="navcss">
             <ul>
-                <li><b>Maali</b></li>
-                <li><b>Matka maaliin</b></li>
+                <li id="maali"><b>Maali</b></li>
+                <li id="matka"><b>Matka maaliin</b></li>
             </ul>
-                    <div class="chat-container">
-                        <div id="map"></div>
-                        <script>
+                    <div class="chat-container"></div>
+                       <div id="map"></div>
+                           <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" defer></script>
+
+                       <script>
+                            document.addEventListener("DOMContentLoaded", function () {
                             const map = L.map("map", {tap: false});
                             L.tileLayer("https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}", {
                             maxZoom: 20,
                             subdomains: ["mt0", "mt1", "mt2", "mt3"],
-                            }).addTo(map)
-                            map.setView([60, 24], 7);
-                        </script>
-                        <div id="flight_options"></div>
-                        <script>
-                            display_flightoptions(data);
-                            const ul = flightOptions.querySelector("ul");
-                            ul.addEventListener("click", async (e) => {
-                            if (e.target.tagName === "LI") {
-                            icao = e.target.textContent.split(",")[0];
-                            ul.innerHTML = "";
-                            const response = await fetch(`/game?action=fly&id=${id}&icao=${icao}`, {
-                            method: "PUT",
-                            });
-                                data = await response.json();
-                                display_flightoptions(data);
-                                }
-                            });
-                        </script>
-                    </div>
-        </section>
+                            }).addTo(map);
+                            map.setView([60, 24], 7);});
+                        </script> 
+
+
+                    
+        </div>
     </main>
     <footer class="Bottom">
         <div class="buttons">
-            <button>Lataa</button>
-            <button>Heitä</button>
-            <button>Sijainti</button>
+            <button onclick="throwDice()">Heitä</button>
+            <button id="chargebutton" onclick="charge()">Lataa</button>
+            <button onclick="findNPC()">Möttösen sijainti</button>
 </div>
-        <div class="logit">
-            CHATLOGIT
+        <div class="logit" id="logit">
+            
         </div>
     </footer>
 

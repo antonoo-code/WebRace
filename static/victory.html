@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>WebRace</title>
+  </head>
+  <body>
+    <h1 id="winner"></h1>
+    <a href="/">New game</a>
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const name = params.get("winner");
+      let message =
+        "Hienoa voitit yksinkertaisen tietokoneohjelman juuri ja juuri. Onnea?";
+      if (name === "npc") {
+        message =
+          "Winner is Möttönen <br> Hävisit juuri yksinkestaiselle tietokone ohjelmalle. Häpeä!!!";
+      }
+
+      document.getElementById("winner").innerHTML = message;
+    </script>
+  </body>
+</html>
