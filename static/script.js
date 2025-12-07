@@ -135,7 +135,7 @@ async function updateMap(data) {
         icon: L.divIcon({
           className: "player-marker",
           html: "📍",
-          size: [20,20]
+          iconSize: [25,25]
         })
       }).addTo(window.gameMap);
 
@@ -177,11 +177,13 @@ async function updateMap(data) {
         icon: L.divIcon({
           className: "mottonen-marker",
           html: "👤",
-          iconSize: [20, 20]
+          iconSize: [25, 25]
         })
       }).addTo(window.gameMap);
 
-      mottonenMarker.bindPopup(`<b>${stats.npc_airport.name}</b><br>Möttösen sijainti`);}
+      mottonenMarker.bindPopup(`<b>${stats.npc_airport.name}</b><br>Möttösen sijainti`);
+      window.gameMap.setView(mottonenCoords, 7);
+    }
   }}
 
 // tähän loppuu kartta (rohan)
