@@ -182,8 +182,7 @@ async function updateMap(data) {
       }).addTo(window.gameMap);
 
       mottonenMarker.bindPopup(`<b>${stats.npc_airport.name}</b><br>Möttösen sijainti`).openPopup();
-      window.gameMap.setView(mottonenCoords, 7);
-    }
+      window.gameMap.setView(mottonenCoords, 7);}
   }}
 
 // tähän loppuu kartta (rohan)
