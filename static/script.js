@@ -155,7 +155,7 @@ async function updateMap(data) {
             icon: L.divIcon({
               className: "airport-marker",
               html: '✈',
-              iconSize: [24, 24]
+              iconSize: [25, 25]
             })
           }).addTo(window.gameMap);
 
@@ -181,7 +181,7 @@ async function updateMap(data) {
         })
       }).addTo(window.gameMap);
 
-      mottonenMarker.bindPopup(`<b>${stats.npc_airport.name}</b><br>Möttösen sijainti`);
+      mottonenMarker.bindPopup(`<b>${stats.npc_airport.name}</b><br>Möttösen sijainti`).openPopup();
       window.gameMap.setView(mottonenCoords, 7);
     }
   }}
