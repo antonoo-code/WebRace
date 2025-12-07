@@ -275,7 +275,10 @@ class Game:
     def findNPC(self):
         npc_airport = airport_data(self.npc_current_airport)
         stats = self.get_statistics()
-        stats['npc_airport']= npc_airport
+        stats['npc_airport']= {
+            "name": npc_airport["name"],
+            "icao": npc_airport["ident"]
+        }
         self.moveNPC()
         return stats
     
