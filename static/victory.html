@@ -3,18 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <title>WebRace</title>
+      <link href="/static/style2.css" rel="stylesheet" />
   </head>
   <body>
-    <h1 id="winner"></h1>
-    <a href="/">New game</a>
+    <div id="container">
+        <h1 id="winner"></h1>
+        <img id="result-img" src="" alt="lopputulos.jpg" />
+        <button onclick="window.location.href='index.html'">New game</button>
+    </div>
     <script>
       const params = new URLSearchParams(window.location.search);
       const name = params.get("winner");
+      const winnerText = document.getElementById("winner")
+      const resultImg = document.getElementById("result-img")
       let message =
         "Hienoa voitit yksinkertaisen tietokoneohjelman juuri ja juuri. Onnea?";
       if (name === "npc") {
         message =
           "Winner is Möttönen <br> Hävisit juuri yksinkestaiselle tietokone ohjelmalle. Häpeä!!!";
+        resultImg.src = "/static/lose.jpg"; //häviö
+      } else {
+          resultImg.src = "/static/win.gif";
       }
 
       document.getElementById("winner").innerHTML = message;
