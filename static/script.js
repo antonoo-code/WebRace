@@ -8,7 +8,7 @@ const distance2goal = document.getElementById("matka");
 const chargeButton = document.getElementById("chargebutton");
 const currentAirport = document.getElementById("current_airport");
 
-function display_flightoptions(data) {
+function display_flightoptions(data, zoomNpc = false) {
   if (data.stats.goal_reached_by === "npc") {
     window.location.href = "/static/victory.html?winner=npc";
   } else if (data.stats.goal_reached_by === "player") {
@@ -33,7 +33,7 @@ function display_flightoptions(data) {
     console.log("charging");
     chargeButton.innerText = "Lataa";
   }
-  updateMap(data);
+  updateMap(data, zoomNpc);
 }
 
 form.addEventListener("submit", async (e) => {
@@ -80,7 +80,7 @@ form.addEventListener("submit", async (e) => {
     let data = await response.json();
     console.log(data);
     range = data.player_range;
-    display_flightoptions(data);
+    display_flightoptions(data, true);
     const div = document.getElementById("logit");
     div.innerHTML =
       "Möttösen sijainti on " +
@@ -115,7 +115,7 @@ async function coordinates(icao) {
 }
 
 // Päivittää kartan
-async function updateMap(data) {
+async function updateMap(data, zoomNpc = false) {
   if (!window.gameMap) return;
 
   // Poista vanhat merkit
@@ -126,8 +126,25 @@ async function updateMap(data) {
   });
 
   const stats = data.stats;
-  // Lisää pelaajan sijainnin
-  if (stats.location) {
+  if (zoomNpc && stats.npc_airport && stats.npc_airport.icao) {
+    const mottonenCoords = await coordinates(stats.npc_airport.icao);
+
+    if (mottonenCoords) {
+      const mottonenMarker = L.marker(mottonenCoords, {
+        icon: L.divIcon({
+          className: "mottonen-marker",
+          html: "👤",
+          iconSize: [25, 25]
+        })
+      }).addTo(window.gameMap);
+
+      mottonenMarker.bindPopup(`<b>${stats.npc_airport.name}</b><br>Möttösen sijainti`).openPopup();
+      window.gameMap.setView(mottonenCoords, 7);
+    }
+  }
+
+  // Lisää pelaajan sijainnin (jos ei ole jo zoomattu möttöselle)
+  if (stats.location && !zoomNpc) {
     const playerCoords = await coordinates(stats.location);
 
     if (playerCoords) {
@@ -141,6 +158,20 @@ async function updateMap(data) {
 
       playerMarker.bindPopup(`<b>${stats.current_airport_name}</b><br>Sijaintisi`).openPopup();
       window.gameMap.setView(playerCoords, 7);
+    }
+
+  } else if (stats.location) {
+    const playerCoords = await coordinates(stats.location);
+    if (playerCoords) {
+      const playerMarker = L.marker(playerCoords, {
+        icon: L.divIcon({
+          className: "player-marker",
+          html: "📍",
+          iconSize: [25,25]
+        })
+      }).addTo(window.gameMap);
+
+      playerMarker.bindPopup(`<b>${stats.current_airport_name}</b><br>Sijaintisi`);
     }
   }
 
@@ -169,7 +200,7 @@ async function updateMap(data) {
   }
 
   // Möttösen sijainti
-  if (stats.npc_airport && stats.npc_airport.icao) {
+  if (!zoomNpc && stats.npc_airport && stats.npc_airport.icao) {
     const mottonenCoords = await coordinates(stats.npc_airport.icao);
 
     if (mottonenCoords) {
@@ -181,8 +212,9 @@ async function updateMap(data) {
         })
       }).addTo(window.gameMap);
 
-      mottonenMarker.bindPopup(`<b>${stats.npc_airport.name}</b><br>Möttösen sijainti`).openPopup();
-      window.gameMap.setView(mottonenCoords, 7);}
-  }}
+      mottonenMarker.bindPopup(`<b>${stats.npc_airport.name}</b><br>Möttösen sijainti`);
+    }
+  }
+}
 
 // tähän loppuu kartta (rohan)
