@@ -217,4 +217,4 @@ async function updateMap(data, zoomNpc = false) {
   }
 }
 
-// tähän loppuu kartta (rohan)
+// tähän loppuu kartta (rohan
