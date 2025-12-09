@@ -125,6 +125,7 @@ async function updateMap(data, zoomNpc = false) {
     }
   });
 
+// Zooma Möttösen sijaintiin, kun painaa Möttösen sijainti nappia
   const stats = data.stats;
   if (zoomNpc && stats.npc_airport && stats.npc_airport.icao) {
     const mottonenCoords = await coordinates(stats.npc_airport.icao);
@@ -143,7 +144,7 @@ async function updateMap(data, zoomNpc = false) {
     }
   }
 
-  // Lisää pelaajan sijainnin (jos ei ole jo zoomattu möttöselle)
+  // Merkitsee pelaajan nykyisen sijainnin ja zooma siihen
   if (stats.location && !zoomNpc) {
     const playerCoords = await coordinates(stats.location);
 
@@ -161,6 +162,7 @@ async function updateMap(data, zoomNpc = false) {
     }
 
   } else if (stats.location) {
+    // Näyttää pelaajan sijainnin taustalla, kun zoomattuna Möttöseen
     const playerCoords = await coordinates(stats.location);
     if (playerCoords) {
       const playerMarker = L.marker(playerCoords, {
@@ -175,7 +177,7 @@ async function updateMap(data, zoomNpc = false) {
     }
   }
 
-  // Lentovaihtoehdot kartalle
+  // Näyttää kaikki mahdolliset lentovaihtoehdot kartalla
   if (stats.flight_options) {
     for (const airport of stats.flight_options) {
       if (airport.icao) {
@@ -190,6 +192,7 @@ async function updateMap(data, zoomNpc = false) {
             })
           }).addTo(window.gameMap);
 
+          // Lentokentän tiedot popup-ikkunassa
           airportMarker.bindPopup(`
           <b>${airport.name}</b><br>
           ICAO: ${airport.icao}<br>
@@ -199,7 +202,7 @@ async function updateMap(data, zoomNpc = false) {
     }
   }
 
-  // Möttösen sijainti
+  // Merkitsee Möttösen sijainnin, ilman zoomausta
   if (!zoomNpc && stats.npc_airport && stats.npc_airport.icao) {
     const mottonenCoords = await coordinates(stats.npc_airport.icao);
 
