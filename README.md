@@ -1,5 +1,5 @@
 # WebRace
-täytyy luoda .venv tiedosto ja sinne tarvittavat tiedot
+täytyy luoda .env tiedosto ja sinne tarvittavat tiedot
 sql komennot:
 
 CREATE DATABASE projektipeli;
