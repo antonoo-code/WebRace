@@ -1,7 +1,7 @@
 # WebRace
 täytyy luoda .env tiedosto ja sinne tarvittavat tiedot
 sql komennot:
-
+ 
 CREATE DATABASE projektipeli;
 USE projektipeli;
 source path/to/lp.sql
